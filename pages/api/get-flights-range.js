@@ -1,4 +1,13 @@
 export default async function handler(req, res) {
+  // "https://travel.paytm.com/api/a/flights/v1/get_fares?adults=1&children=0&infants=0&class=E&client=web&destination=BLR&end_date=2023-04-26&source=DEL&start_date=2023-03-17";
+
+  //   get today's date in YYYY-MM-DD format
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2, "0");
+  const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+  const yyyy = today.getFullYear();
+  const todayDate = yyyy + "-" + mm + "-" + dd;
+
   const urlBuilder = (
     adults = 1,
     children = 0,
@@ -8,9 +17,7 @@ export default async function handler(req, res) {
     end_date,
     source
   ) => {
-    end_date = end_date.replaceAll("-", "");
-    // https://travel.paytm.com/api/flights/v2/search?accept=combination&enable={%22handBaggageFare%22:true,%22paxWiseConvFee%22:true,%22minirules%22:true}&adults=1&children=0&class=E&client=web&departureDate=20230331&origin=AMD&infants=0&destination=BLR
-    return `https://travel.paytm.com/api/flights/v2/search?accept=combination&enable={%22handBaggageFare%22:true,%22paxWiseConvFee%22:true,%22minirules%22:true}&adults=${adults}&children=${children}&class=${classType}&client=web&departureDate=${end_date}&origin=${source}&infants=${infants}&destination=${destination}`;
+    return `https://travel.paytm.com/api/a/flights/v1/get_fares?adults=${adults}&children=${children}&infants=${infants}&class=${classType}&client=web&destination=${destination}&end_date=${end_date}&source=${source}&start_date=${todayDate}`;
   };
 
   const scrapeLink = `https://tickets.paytm.com/flights/flightSearch/${req.body.source}/${req.body.destination}/1/0/0/E/${req.body.end_date}`;
@@ -24,7 +31,6 @@ export default async function handler(req, res) {
     req.body.end_date,
     req.body.source
   );
-  console.log(apiUrl);
 
   const data = await fetch(apiUrl, {
     method: "GET",
@@ -35,11 +41,7 @@ export default async function handler(req, res) {
     },
   }).then((response) => response.json());
 
-  res.status(200).json({
-    data: {
-      flights: data.body.onwardflights.flights,
-      meta: data.body.onwardflights.meta,
-    },
-    scrapeLink,
-  });
+  console.log(apiUrl);
+
+  res.status(200).json({ data, scrapeLink });
 }

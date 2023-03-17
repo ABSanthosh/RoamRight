@@ -2,28 +2,27 @@ import { useState } from "react";
 import "../styles/routes/Home.scss";
 import IndianData from "../utils/india.json";
 import Select from "react-select";
+import Cashify from "../utils/Cashify";
 
 export default function Home() {
   const [itinerary, setItinerary] = useState("");
   const [flights, setFlights] = useState();
-  const [flightData, setFlightData] = useState(IndianData);
+  const [flightData] = useState(IndianData);
 
   const [data, setData] = useState({
-    fromCity: "",
-    toCity: "",
-    date: "",
+    source: "",
+    destination: "",
+    end_date: "",
     noOfDays: "",
+    adults: 1,
+    children: 0,
+    infants: 0,
+    classType: "E",
   });
 
   return (
     <main className="HomeContainer">
       <form>
-        {/* <input
-          type="text"
-          placeholder="City"
-          value={data.city}
-          onChange={(e) => setData({ ...data, city: e.target.value })}
-        /> */}
         <Select
           styles={{
             container: (provided) => ({
@@ -32,14 +31,15 @@ export default function Home() {
             }),
           }}
           placeholder="From"
-          options={flightData.map((item) => ({
-            value: item.city,
-            label: `${item.city}-${item.iata}`,
-            ...item,
-          }))}
+          options={flightData
+            .sort((a, b) => a.city.localeCompare(b.city))
+            .map((item) => ({
+              value: item.city,
+              label: `${item.city}-${item.iata}`,
+              ...item,
+            }))}
           onChange={(item) => {
-            setData({ ...data, fromCity: `${item.iata}-${item.city}` });
-            // setFlightData(flightData.filter((item2) => item2.id !== item.id));
+            setData({ ...data, source: `${item.iata}` });
           }}
         />
         <Select
@@ -51,22 +51,22 @@ export default function Home() {
           }}
           placeholder="To"
           options={flightData
-            .filter((item) => item.id !== data.id)
+            // sort by city name
+            .sort((a, b) => a.city.localeCompare(b.city))
             .map((item) => ({
               value: item.city,
               label: `${item.city}-${item.iata}`,
               ...item,
             }))}
           onChange={(item) => {
-            setData({ ...data, toCity: `${item.iata}-${item.city}` });
-            // setFlightData(flightData.filter((item2) => item2.id !== item.id));
+            setData({ ...data, destination: `${item.iata}` });
           }}
         />
         <input
           type="date"
           placeholder="Date"
           value={data.date}
-          onChange={(e) => setData({ ...data, date: e.target.value })}
+          onChange={(e) => setData({ ...data, end_date: e.target.value })}
         />
         <input
           type="text"
@@ -79,26 +79,23 @@ export default function Home() {
           onClick={async (e) => {
             e.preventDefault();
 
-            console.log(data);
+            // const response = await fetch("/api/get-itinerary", {
+            //   method: "POST",
+            //   headers: {
+            //     "Content-Type": "application/json",
+            //   },
+            //   body: JSON.stringify(data),
+            // });
+            // const text = await response.json().then((res) => res.text);
+            // setItinerary(text);
 
-            return;
-            const response = await fetch("/api/get-itinerary", {
+            await fetch("/api/get-flights", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify(data),
-            });
-            const text = await response.json().then((res) => res.text);
-            setItinerary(text);
-
-            const flightsResponse = await fetch("/api/get-flights", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({}),
-            });
+            }).then((res) => res.json().then((res) => setFlights(res.data)));
           }}
         >
           Get Itinerary
@@ -109,7 +106,29 @@ export default function Home() {
       </div>
 
       <div className="FlightsContainer">
-        <pre>{JSON.stringify(flights, null, 2)}</pre>
+        <pre>
+          {JSON.stringify(
+            flights?.flights.map((item) => {
+              return {
+                airline: item.airline,
+                departureTime: item.departureTimeAirport,
+                departureDate: item.departureDateAirport,
+                arrivalTime: item.arrivalTimeAirport,
+                arrivalDate: item.arrivalDateAirport,
+                duration: item.duration,
+                hops:
+                  item.hops.length === 1
+                    ? "Non Stop"
+                    : `${item.hops.length} Stop(s)`,
+                price: Cashify(item.price[0].display_price),
+                seats: item.price[0].seats_available,
+              };
+            }),
+
+            null,
+            2
+          )}
+        </pre>
       </div>
     </main>
   );
