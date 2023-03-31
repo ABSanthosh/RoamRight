@@ -62,8 +62,9 @@ function ContentContainer({ data, flightData, setFlightData }) {
             />
           ) : (
             <>
-              {flightData.map((flight) => (
+              {flightData.map((flight, key) => (
                 <div
+                  key={key}
                   style={{
                     padding: "10px",
                     backgroundColor: "#111111",
