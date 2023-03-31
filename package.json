@@ -21,6 +21,7 @@
     "react-select": "^5.7.0"
   },
   "devDependencies": {
+    "netlify-plugin-playwright-cache": "^0.0.1",
     "sass": "^1.57.1"
   }
 }
