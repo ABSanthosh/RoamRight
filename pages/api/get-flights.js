@@ -6,9 +6,11 @@ export default async function handler(req, res) {
   // const url =
   //   "https://tickets.paytm.com/flights/flightSearch/DEL-Delhi/JAI-Jaipur/1/0/0/E/2023-04-01";
 
-  const browser = await Playwright.chromium.launch({
+  const browser = await Playwright.webkit.launch({
     headless: true,
   });
+
+  
 
   const page = await browser.newPage();
   await page.goto(url);
