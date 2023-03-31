@@ -17,7 +17,6 @@
 
   @include respondAt(915px) {
     justify-content: space-between;
-    height: 70px;
     padding: 0 20px 0 7px;
   }
 
@@ -30,10 +29,9 @@
       color: #fff;
       font-family: "Pompiere", cursive;
       font-size: 35px;
-      line-height: 100%;
     }
     @include respondAt(915px) {
-      display: block;
+      @include make-flex();
     }
   }
 
@@ -51,23 +49,16 @@
       max-width: 290px;
       flex-direction: column;
       padding: 123px 14px 0 24px;
-      background-color: #ffffff;
+      background-color: #111111;
       justify-content: flex-start;
       transform: translateX(100%);
-      border-left: 4px solid #93b8e9;
+      border-left: 3px solid #3c6ffc;
       transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
       &--open {
         transform: translateX(0%);
       }
     }
 
-    .devfolio-button-iframe {
-      position: relative;
-      background: linear-gradient(90deg, #0afffd 0%, #7fe786 100%);
-      border: 1px solid #000000;
-      box-shadow: 6px 4px 0px #ffffff;
-      border-radius: 31px;
-    }
   }
 
   &__MenuList {
@@ -96,12 +87,11 @@
     &--logo {
       list-style: none;
       left: 0;
-      margin-left: 10px;
+      // margin-left: 10px;
       span {
         color: #fff;
         font-family: "Pompiere", cursive;
         font-size: 35px;
-        line-height: 100%;
       }
       @include respondAt(915px) {
         display: none;
@@ -166,7 +156,7 @@
           display: block;
           transform-origin: 4px 0px;
           transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
-          border-top: 3px solid rgb(0, 0, 0);
+          border-top: 2px solid rgb(255, 255, 255);
           border-radius: 10px;
           &:first-child {
             transform-origin: 0% 0%;

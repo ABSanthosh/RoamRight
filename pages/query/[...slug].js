@@ -2,6 +2,7 @@ import { useState } from "react";
 import Header from "../../components/Header/Header";
 import "../../styles/routes/query/slug.scss";
 import InputContainer from "../../components/InputContainer/InputContainer";
+import ContentContainer from "../../components/ContentContainer/ContentContainer";
 
 export async function getServerSideProps(context) {
   const { slug } = context.params;
@@ -34,6 +35,7 @@ export default function Slug({ dCity, sCity, date, days }) {
       <Header />
       <div className="SlugContainer__main">
         <InputContainer data={data} setData={setData} />
+        <ContentContainer />
       </div>
     </main>
   );

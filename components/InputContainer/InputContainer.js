@@ -3,7 +3,6 @@ import "./InputContainer.scss";
 
 import IndianData from "../../utils/india.json";
 import Select from "react-select";
-import * as Accordion from "@radix-ui/react-accordion";
 
 function InputContainer({ data, setData }) {
   const [flightData] = useState(IndianData);

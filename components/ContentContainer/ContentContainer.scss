@@ -1,0 +1,63 @@
+.ContentContainer {
+  @include box(100%, 430px);
+  background-color: #22252e;
+  border-radius: 10px;
+  border: 1px solid #555555;
+
+  .TabsRoot {
+    display: flex;
+    flex-direction: column;
+    border-radius: 9px 9px 0 0;
+    @include box();
+  }
+
+  .TabsList {
+    @include box(100%, 40px);
+    border-radius: 9px 9px 0 0;
+    background-color: #1c1e24;
+    @include make-flex($dir: row, $just: flex-start, $align: center);
+  }
+
+  .TabsTrigger {
+    @include box(auto, 100%);
+    min-width: 130px;
+    border: none;
+    outline: none;
+    border-right: 1px solid#555555;
+    background-color: #22252e;
+    cursor: pointer;
+    color: #ffffff;
+
+    @include respondAt(575px) {
+      width: 100%;
+      min-width: unset;
+    }
+
+    &:first-child {
+      border-radius: 9px 0 0 0;
+    }
+
+    &:last-child {
+      flex-grow: 1;
+      border-radius: 0 9px 0 0;
+      border-right: none;
+      min-width: unset;
+      width: 100%;
+      @include respondAt(575px) {
+        display: none;
+      }
+    }
+
+    &:nth-last-child(2) {
+      @include respondAt(575px) {
+        border-radius: 0 9px 0 0;
+        border-right: none;
+      }
+    }
+
+    &[data-state="inactive"] {
+      border-bottom: 1px solid #555555;
+      background-color: #1c1e24;
+    }
+  }
+}

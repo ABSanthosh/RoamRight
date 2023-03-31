@@ -15,9 +15,17 @@
   height: 8px;
 }
 ::-webkit-scrollbar-thumb {
-  background: #0afffde5;
-  border-radius: 1px;
+  background: #d3d1cb;
+  border-radius: 10px;
 }
+::-webkit-scrollbar-track {
+  background: #111111;
+}
+::selection {
+  // background: var(--textSelectionColor);
+}
+
+
 ::selection {
   background: #0afffde5;
   color: #0f1621;
@@ -47,6 +55,7 @@ body,
   @include box(100vw, auto);
   min-height: 100vh;
   background-color: #111111;
+  color: white;
   @include make-flex($just: flex-start);
 
   @include respondAt(915px) {
