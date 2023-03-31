@@ -11,7 +11,9 @@ export default function Home() {
 
   const [data, setData] = useState({
     source: "",
+    fromCity: "",
     destination: "",
+    toCity: "",
     end_date: "",
     noOfDays: "",
     adults: 1,
@@ -39,7 +41,7 @@ export default function Home() {
               ...item,
             }))}
           onChange={(item) => {
-            setData({ ...data, source: `${item.iata}` });
+            setData({ ...data, source: `${item.iata}`, fromCity: item.city });
           }}
         />
         <Select
@@ -59,7 +61,11 @@ export default function Home() {
               ...item,
             }))}
           onChange={(item) => {
-            setData({ ...data, destination: `${item.iata}` });
+            setData({
+              ...data,
+              destination: `${item.iata}`,
+              toCity: item.city,
+            });
           }}
         />
         <input
@@ -74,6 +80,11 @@ export default function Home() {
           value={data.noOfDays}
           onChange={(e) => setData({ ...data, noOfDays: e.target.value })}
         />
+        <a
+          href={`/query/${data.toCity}-${data.destination}/${data.fromCity}-${data.source}/${data.end_date}/${data.noOfDays}`}
+        >
+          Fetch!
+        </a>
         <button
           type="submit"
           onClick={async (e) => {
@@ -84,7 +95,11 @@ export default function Home() {
             //   headers: {
             //     "Content-Type": "application/json",
             //   },
-            //   body: JSON.stringify(data),
+            //   body: JSON.stringify({
+            //     city: data.toCity,
+            //     date: data.end_date,
+            //     noOfDays: data.noOfDays,
+            //   }),
             // });
             // const text = await response.json().then((res) => res.text);
             // setItinerary(text);
@@ -95,7 +110,12 @@ export default function Home() {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify(data),
-            }).then((res) => res.json().then((res) => setFlights(res.data)));
+            }).then((res) =>
+              res.json().then((res) => {
+                console.log(res);
+                setFlights(res.data);
+              })
+            );
           }}
         >
           Get Itinerary

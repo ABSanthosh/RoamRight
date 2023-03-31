@@ -5,9 +5,9 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>Glitch </title>
-        <meta name="description" content="Awesome website for Glitch hack" />
-        <link rel="icon" href="/Images/glitchLogo.svg" />
+        <title>roamright </title>
+        <meta name="description" content="Awesome website for roamright hack" />
+        <link rel="icon" href="/Images/roamrightLogo.svg" />
       </Head>
       <Component {...pageProps} />
     </>

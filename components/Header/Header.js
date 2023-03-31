@@ -22,7 +22,7 @@ function Header() {
   return (
     <nav className="HeaderWrapper">
       <Link href="/" className="HeaderWrapper__logo">
-        <span>GLITCH</span>
+        <span>Roam Right</span>
       </Link>
       <div
         className={`HeaderWrapper__Menu ${
@@ -32,43 +32,14 @@ function Header() {
         <ul className="HeaderWrapper__MenuList--left">
           <li className="HeaderWrapper__MenuList--logo">
             <Link href="/">
-              <span>GLITCH</span>
+              <span>Roam Right</span>
             </Link>
           </li>
         </ul>
         <ul className="HeaderWrapper__MenuList--center">
-          <li className="HeaderWrapper__MenuList--item">
-            <a href="#">Home</a>
-          </li>
-          <li className="HeaderWrapper__MenuList--item">
-            <a href="/#about">About</a>
-          </li>
-          <li className="HeaderWrapper__MenuList--item">
-            <a href="/#tracks">Tracks</a>
-          </li>
-          <li className="HeaderWrapper__MenuList--item">
-            <a href="/#sponsors">Sponsors</a>
-          </li>
-          <li className="HeaderWrapper__MenuList--item">
-            <a href="/#prizes">Prizes</a>
-          </li>
-          <li className="HeaderWrapper__MenuList--item">
-            <a href="/#events">Events</a>
-          </li>
-          <li className="HeaderWrapper__MenuList--item">
-            <a href="/#team">Team</a>
-          </li>
-          <li className="HeaderWrapper__MenuList--item">
+          {/* <li className="HeaderWrapper__MenuList--item">
             <a href="/#faq">FAQs</a>
-          </li>
-        </ul>
-        <ul className="HeaderWrapper__MenuList--right">
-          <div
-            className="apply-button"
-            data-hackathon-slug="YOUR-HACKATHON-SLUG"
-            data-button-theme="light"
-            style={{ height: "44px", minWidth: "312px", width: "100%" }}
-          ></div>
+          </li> */}
         </ul>
       </div>
       <div className="HeaderWrapper__Hamburger">
