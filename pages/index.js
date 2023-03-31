@@ -29,6 +29,41 @@ export default function Home() {
       <Header />
       <div className="HomeContainer__main">
         <InputContainer data={data} setData={setData} />
+        <button
+          type="submit"
+          onClick={async (e) => {
+            e.preventDefault();
+
+            // const response = await fetch("/api/get-itinerary", {
+            //   method: "POST",
+            //   headers: {
+            //     "Content-Type": "application/json",
+            //   },
+            //   body: JSON.stringify({
+            //     city: data.toCity,
+            //     date: data.end_date,
+            //     noOfDays: data.noOfDays,
+            //   }),
+            // });
+            // const text = await response.json().then((res) => res.text);
+            // setItinerary(text);
+
+            await fetch("/api/get-flights", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            }).then((res) =>
+              res.json().then((res) => {
+                console.log(res);
+                setFlights(res.data);
+              })
+            );
+          }}
+        >
+          Get Itinerary
+        </button>
       </div>
       {/* <form>
         <Select

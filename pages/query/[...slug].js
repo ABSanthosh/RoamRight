@@ -22,6 +22,8 @@ export default function Slug({ dCity, sCity, date, days }) {
   // /query/Jaipur-JAI/Delhi-DEL/2023-03-28/5
   // /query/dCity-iata/sCity-iata/yyyy-mm-dd/days
 
+  const [flightData, setFlightData] = useState([]);
+
   const [data, setData] = useState({
     source: sCity.split("-")[1],
     fromCity: sCity.split("-")[0],
@@ -40,7 +42,11 @@ export default function Slug({ dCity, sCity, date, days }) {
       <Header />
       <div className="SlugContainer__main">
         <InputContainer data={data} setData={setData} />
-        <ContentContainer />
+        <ContentContainer
+          data={data}
+          flightData={flightData}
+          setFlightData={setFlightData}
+        />
       </div>
     </main>
   );
