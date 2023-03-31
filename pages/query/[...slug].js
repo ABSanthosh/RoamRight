@@ -9,7 +9,12 @@ export async function getServerSideProps(context) {
   const [dCity, sCity, date, days] = slug;
 
   return {
-    props: {},
+    props: {
+      dCity,
+      sCity,
+      date,
+      days,
+    },
   };
 }
 
@@ -18,12 +23,12 @@ export default function Slug({ dCity, sCity, date, days }) {
   // /query/dCity-iata/sCity-iata/yyyy-mm-dd/days
 
   const [data, setData] = useState({
-    source: "",
-    fromCity: "",
-    destination: "",
-    toCity: "",
-    end_date: "",
-    noOfDays: "",
+    source: sCity.split("-")[1],
+    fromCity: sCity.split("-")[0],
+    destination: dCity.split("-")[1],
+    toCity: dCity.split("-")[0],
+    end_date: date,
+    noOfDays: days,
     adults: 1,
     children: 0,
     infants: 0,

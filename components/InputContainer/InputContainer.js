@@ -3,10 +3,11 @@ import "./InputContainer.scss";
 
 import IndianData from "../../utils/india.json";
 import Select from "react-select";
+import Link from "next/link";
 
 function InputContainer({ data, setData }) {
   const [flightData] = useState(IndianData);
-  const [date, setDate] = useState(new Date());
+  const [date] = useState(new Date());
 
   return (
     <div className="InputContainer">
@@ -46,6 +47,10 @@ function InputContainer({ data, setData }) {
             menuList: (base, _) => ({
               ...base,
               borderRadius: "5px",
+
+              "::-webkit-scrollbar-track": {
+                background: "#35383F",
+              },
             }),
             input: (base, _) => ({
               ...base,
@@ -66,6 +71,10 @@ function InputContainer({ data, setData }) {
             }))}
           onChange={(item) => {
             setData({ ...data, source: `${item.iata}`, fromCity: item.city });
+          }}
+          defaultValue={{
+            value: data.fromCity,
+            label: `${data.fromCity}-${data.source}`,
           }}
         />
         <Select
@@ -101,6 +110,10 @@ function InputContainer({ data, setData }) {
             menuList: (base, _) => ({
               ...base,
               borderRadius: "5px",
+
+              "::-webkit-scrollbar-track": {
+                background: "#35383F",
+              },
             }),
             input: (base, _) => ({
               ...base,
@@ -127,11 +140,15 @@ function InputContainer({ data, setData }) {
               toCity: item.city,
             });
           }}
+          defaultValue={{
+            value: data.toCity,
+            label: `${data.toCity}-${data.destination}`,
+          }}
         />
         <input
           type="date"
           placeholder="Date"
-          value={data.date}
+          value={data.end_date}
           onChange={(e) => setData({ ...data, end_date: e.target.value })}
           min={date.toISOString().split("T")[0]}
         />
@@ -142,7 +159,12 @@ function InputContainer({ data, setData }) {
           value={data.noOfDays}
           onChange={(e) => setData({ ...data, noOfDays: e.target.value })}
         />
-        <button className="InputContainer__inputs--button">Build!</button>
+        <Link
+          href={`/query/${data.toCity}-${data.destination}/${data.fromCity}-${data.source}/${data.end_date}/${data.noOfDays}`}
+          className="InputContainer__inputs--button"
+        >
+          Build!
+        </Link>
       </div>
     </div>
   );

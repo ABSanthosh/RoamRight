@@ -51,13 +51,6 @@
       grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
     }
 
-    // &--select {
-    //   @include respondAt(1080px) {
-    //     // make it take up 1.5 columns
-    //     // grid-row: span 2;
-    //   }
-    // }
-
     input[type="number"],
     input[type="date"] {
       @include respondAt(1080px) {
@@ -74,6 +67,7 @@
       background-color: #3c6ffc;
       color: white;
       cursor: pointer;
+      @include make-flex();
       transition: all 0.2s ease-in-out;
 
       &:hover {
